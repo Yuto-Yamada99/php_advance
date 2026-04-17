@@ -3,8 +3,9 @@ require_once 'db_connect.php';
 
 // データを取得（作成日時の新しい順）
 $sql = 'SELECT * FROM tasks ORDER BY created_at DESC';
-$stmt = $dbh->query($sql);
+$stmt = $db->query($sql);
 $tasks = $stmt->fetchAll();
+
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +26,7 @@ $tasks = $stmt->fetchAll();
 <body>
     <h1>ToDoリスト一覧</h1>
     
-    <a href="create.php" style="padding: 10px; background: #007bff; color: white; text-decoration: none;">+ 新規TODO作成</a>
+    <a href="add_tasks.php" style="padding: 10px; background: #007bff; color: white; text-decoration: none;">+ 新規TODO作成</a>
 
     <table>
         <thead>
@@ -45,7 +46,7 @@ $tasks = $stmt->fetchAll();
                     <td><?php echo $task['created_at']; ?></td>
                     <td><?php echo $task['updated_at']; ?></td>
                     <td>
-                        <a href="edit.php?id=<?php echo $t['id']; ?>" class="btn edit-btn">編集</a>
+                        <a href="edit.php?id=<?php echo $task['id']; ?>" class="btn edit-btn">編集</a>
                         <a href="delete.php?id=<?php echo $task['id']; ?>" class="btn delete-btn" onclick="return confirm('本当に削除しますか？')">削除</a>
                     </td>
                 </tr>
