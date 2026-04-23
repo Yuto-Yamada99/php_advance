@@ -7,10 +7,7 @@ require_once 'views/head_tmp.php';
 
 <body>
     <h1>新規Todoを作成</h1>
-    <?php
-        require_once 'model/insert.php';
-print_r($_POST);
-?>
+    
     <form action="model/insert.php" method="post">
         
         <!-- classでbootstrapで整える -->
@@ -23,8 +20,9 @@ print_r($_POST);
             <textarea name="content" class="form-control" id="content"></textarea>
         </div>
         
-        <button type="submit">追加する</button>
-        <button type="submit">戻る</button>
+        <button type="submit" class="btn btn-secondary">追加する</button>
+        <!-- <a href="index_bootstrap.php"><button type="submit">戻る</button></a> -->
+        <a href="index_bootstrap2.php" class="btn btn-secondary">戻る</a>
     </form>
 
 </body>

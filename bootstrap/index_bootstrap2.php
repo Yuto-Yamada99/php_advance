@@ -2,20 +2,21 @@
 <html lang="ja">
 
 <?php
+require_once 'model/escape.php';
 require_once 'views/head_tmp.php';
+require_once 'model/todo.php';
 ?>
 
 <body>
     <h1>Todoリスト一覧</h1>
     <?php
     // データベース接続
-    $pdo = new PDO('mysql:host=localhost;dbname=task_list;charset=utf8', 'root', '');
+$todo = new Todo();
+$rows = $todo->findAll();
+// $pdo = new PDO('mysql:host=localhost;dbname=task_list;charset=utf8', 'root', '');
 
 // データベースからデータを取得
 // カラム：id/title/content/created_at/updated_at/
-$sql = 'SELECT * FROM tasks ORDER BY created_at;';
-$stmt = $pdo->prepare($sql);
-$stmt->execute();
 
 // 取得したデータの表示
 // while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -39,25 +40,31 @@ $stmt->execute();
         </thead>
         
         <tbody>
-            <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { ?>
+            <?php foreach ($rows as $row) { ?>
             <tr>
-                <td><?php echo $row['title']; ?></td>
-                <td><?php echo $row['content']; ?></td>
-                <td><?php echo $row['created_at']; ?></td>
-                <td><?php echo $row['updated_at']; ?></td>
+                <td><?php echo h($row['title']); ?></td>
+                <td><?php echo h($row['content']); ?></td>
+                <td><?php echo h($row['created_at']); ?></td>
+                <td><?php echo h($row['updated_at']); ?></td>
                 <td>
                     <!-- <a href="edit_bootstrap.php"><button type="submit">編集</button></a> -->
-                    <a class="btn btn-primary" href="edit_bootstrap.php">編集</a>
+                    <a class="btn btn-primary btn-sm" href="edit_bootstrap.php?id=<?php echo h($row['id']); ?>">編集</a>
+                    
                     <!-- <button type="submit">削除</button> -->
-                    <a class="btn btn-primary" href="edit_bootstrap.php">削除</a>
+                    <!-- <a class="btn btn-primary" href="delete_bootstrap.php">削除</a> -->
+                   <form action="model/delete.php" method="post" style="display: inline;">
+                        <input type="hidden" name="delete_id" value="<?php echo h($row['id']); ?>">
+                        <button type="submit" 
+                                class="btn btn-danger btn-sm" 
+                                onclick="return confirm('本当に削除しますか？')">
+                                削除
+                        </button>
+                    </form>
                 </td>
             </tr>
             <?php } ?>
         </tbody>
     </table>
-
-    
-
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

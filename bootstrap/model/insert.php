@@ -1,29 +1,22 @@
 <?php
 
-// データベース接続
-$pdo = new PDO('mysql:host=localhost;dbname=task_list;charset=utf8', 'root', '');
+require_once 'todo.php';
+$todo = new Todo();
 
-// データベースにデータを書き込む
-$sql = 'INSERT INTO tasks(title,content,created_at,updated_at) Values(::title, ::content, NOW()), NOW())';
-$stmt = $pdo->prepare($sql);
-
-$stmt->bindValue('::title', $title, PDO::PARAM_STR);
-$stmt->bindValue('::content', $content, PDO::PARAM_STR);
-
-$stmt->execute();
-
+// print_r($_POST);
+// 受け取ったデータを書き込む
 if (isset($_POST['title']) && isset($_POST['content'])) {
     $title = $_POST['title'];
     $content = $_POST['content'];
-    $sql = 'INSERT INTO tasks(title,content,created_at,updated_at) Values(::title, ::content, NOW()), NOW())';
-    $stmt = $pdo->prepare($sql);
 
-    $stmt->bindValue('::title', $title, PDO::PARAM_STR);
-    $stmt->bindValue('::content', $content, PDO::PARAM_STR);
+    $todo->create($title, $content);
 
-    $stmt->execute();
-} else {
-    $title = 'なし';
-    $content = 'なし';
+    // 保存が終わったら一覧ページへ飛ばす ---
+    header('Location: ../index_bootstrap2.php');
+    exit;
 }
-echo '投稿内容を受信'.$title.','.$content;
+// else {
+//     header('Location: ../index_bootstrap2.php');
+//     exit;
+// }
+// echo '投稿内容を受信'.$title.','.$content;
