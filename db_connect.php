@@ -1,16 +1,33 @@
 <?php
 
-$dsn = 'mysql:host=localhost;dbname=task_list;charset=utf8';
-$user = 'root'; // XAMPPの初期設定
-$password = ''; // XAMPPの初期設定（空）
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'task_list');
+define('DB_USER', 'root');
+define('DB_PASS', '');
 
-try {
-    $dbh = new PDO($dsn, $user, $password);
-    // エラーが発生した時に例外を投げる設定
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (Exception $e) {
-    echo 'ただいま障害によりサービスが利用できません。';
-    exit;
+class Database
+{
+    private $dbh;
+
+    public function __construct()
+    {
+        $dsn = 'mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8';
+        try {
+            $this->dbh = new PDO($dsn, DB_USER, DB_PASS);
+            $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (Exception $e) {
+            exit('ただいま障害によりサービスが利用できません。');
+        }
+    }
+
+    public function query($sql, $params = [])
+    {
+        $stmt = $this->dbh->prepare($sql);
+        $stmt->execute($params);
+
+        return $stmt;
+    }
 }
 
-// echo '接続成功しました！';
+// 最後に、この道具箱を使い始める準備（インスタンス化）をする
+$db = new Database();
