@@ -14,11 +14,7 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
     $db->query($sql, [$title, $content]);
 
     // 保存が終わったら一覧画面（index.php）に戻る
-<<<<<<< HEAD
     header('Location: index_bootstrap.php');
-=======
-    header('Location: index.php');
->>>>>>> f33be3271cc69943063d5cd981e96194b64b17fd
     exit;
 }
 ?>
@@ -49,11 +45,7 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
                 <textarea name="content" id="content" rows="5" required></textarea>
             </div>
             <button type="submit">作成する</button>
-<<<<<<< HEAD
             <a href="index_bootstrap.php">戻る</a>
-=======
-            <a href="index.php">戻る</a>
->>>>>>> f33be3271cc69943063d5cd981e96194b64b17fd
         </form>
     </div>
 </body>

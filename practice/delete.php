@@ -11,11 +11,7 @@ if ($id) {
     $sql = 'DELETE FROM tasks WHERE id = ?';
 
     // クラス化した $db の query メソッドを使って安全に削除
-<<<<<<< HEAD
     $dbh->query($sql, [$id]);
-=======
-    $db->query($sql, [$id]);
->>>>>>> f33be3271cc69943063d5cd981e96194b64b17fd
 }
 
 // 削除が終わったら（あるいはIDがなくても）一覧画面に戻る

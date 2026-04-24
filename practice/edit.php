@@ -15,29 +15,18 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
 
     // 指定したIDのデータを更新するSQL
     $sql = 'UPDATE tasks SET title = ?, content = ?, updated_at = NOW() WHERE id = ?';
-<<<<<<< HEAD
     $stmt = $dbh->prepare($sql);
     $stmt->execute([$title, $content, $id]);
 
     header('Location: index_bootstrap.php');
-=======
-    $db->query($sql, [$title, $content, $id]);
-
-    header('Location: index.php');
->>>>>>> f33be3271cc69943063d5cd981e96194b64b17fd
     exit;
 }
 
 // 表示用データの取得（画面を開いた時
 $sql = 'SELECT * FROM tasks WHERE id = ?';
-<<<<<<< HEAD
 $stmt = $dbh->query($sql);
 $stmt->execute([$id]);
 $task = $stmt->fetch(PDO::FETCH_ASSOC);
-=======
-$stmt = $db->query($sql, [$id]);
-$task = $stmt->fetch();
->>>>>>> f33be3271cc69943063d5cd981e96194b64b17fd
 
 if (!$task) {
     exit('指定されたTODOは見つかりませんでした');
@@ -71,11 +60,7 @@ if (!$task) {
                 <textarea name="content" id="content" rows="5" required><?php echo htmlspecialchars($task['content'], ENT_QUOTES, 'UTF-8'); ?></textarea>
             </div>
             <button type="submit">更新する</button>
-<<<<<<< HEAD
             <a href="index_bootstrap.php">戻る</a>
-=======
-            <a href="index.php">戻る</a>
->>>>>>> f33be3271cc69943063d5cd981e96194b64b17fd
         </form>
     </div>
 </body>
